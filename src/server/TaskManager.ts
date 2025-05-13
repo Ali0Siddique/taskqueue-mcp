@@ -208,10 +208,13 @@ export class TaskManager {
     // Import and configure the appropriate provider
     let modelProvider;
     switch (provider) {
-      case "openai":
-        const { openai } = await import("@ai-sdk/openai");
-        modelProvider = openai(model);
-        break;
+        case "openai":
+  const { openai } = await import("@ai-sdk/openai");
+  modelProvider = openai(model, {
+    baseURL: process.env.OPENROUTER_API_BASE || "https://openrouter.ai/api/v1",
+    apiKey: process.env.OPENROUTER_API_KEY,
+  });
+  break;
       case "google":
         const { google } = await import("@ai-sdk/google");
         modelProvider = google(model);
